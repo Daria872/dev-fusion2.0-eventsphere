@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EventSphere - Future of Immersive Keynote Events</title>
+  
+  <!-- Modern Typography from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Hanken+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Thin-stroke Holographic Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="index.css">
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+  <!-- Dynamic Cursor Spotlight Glow -->
+  <div id="mouse-spotlight"></div>
+
+  <!-- Ambient Cinematic Orbs in Background -->
+  <div class="ambient-glow-orb"></div>
+  <div class="ambient-glow-orb orb-purple" style="top: 60%; right: 10%;"></div>
+
+  <div class="app-container">
+    
+    <!-- Fixed Glass Navbar -->
+    <header class="app-header">
+      <div class="header-container">
+        <a href="#landing" class="logo">
+          <span class="material-symbols-outlined text-gradient" style="font-size: 32px; font-variation-settings: 'FILL' 1;">blur_on</span>
+          <span class="logo-text text-gradient">EventSphere</span>
+        </a>
+        
+        <nav class="nav-links">
+          <a href="#landing" class="nav-link active hide-logged-out" data-page="landing" style="display:none;">Home</a>
+          <a href="#explore" class="nav-link hide-logged-out" data-page="explore" style="display:none;">Explore</a>
+          <a href="#networking" class="nav-link hide-logged-out" data-page="networking" style="display:none;">AI Networking</a>
+          <a href="#attendee" class="nav-link hide-logged-out" data-page="attendee" style="display:none;">My Ticket</a>
+          <a href="#organizer" class="nav-link hide-logged-out" data-page="organizer" style="display:none;">Command Center</a>
+          <a href="#login" class="btn-outline font-mono show-logged-out" style="padding: 8px 20px;">SYS_LOGIN</a>
+          
+          <button class="profile-trigger hide-logged-out" id="profile-btn" style="display:none;">
+            <div class="text-right" style="margin-right: 4px; line-height: 1;">
+              <p class="font-mono" style="font-size: 11px; color:#fff;" id="header-user-name">Alex Sterling</p>
+              <span class="font-mono" style="font-size: 9px; color: var(--color-primary);" id="header-user-role">ORGANIZER</span>
+            </div>
+            <div class="avatar-wrapper">
+              <img src="assets/alex_sterling_avatar.png" alt="Profile" id="header-avatar-img">
+            </div>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Navigation Drawer -->
+    <div class="nav-drawer" id="drawer">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+        <h3 class="font-mono" style="font-size: 14px; color: var(--color-primary);">USER_PROFILE</h3>
+        <button class="modal-close" id="drawer-close" style="position:static; font-size: 20px;">×</button>
+      </div>
+      
+      <div style="text-align: center; margin-bottom: 32px;">
+        <div class="profile-img-big" style="width: 100px; height: 100px; margin-bottom: 16px;">
+          <img src="assets/alex_sterling_avatar.png" alt="Big Profile" id="drawer-avatar-img">
+        </div>
+        <h4 id="drawer-user-name" style="font-size: 22px; margin-bottom: 4px;">Alex Sterling</h4>
+        <p class="font-mono" id="drawer-user-role" style="font-size: 11px; color: var(--color-secondary-dim);">PREMIUM ORGANIZER</p>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap: 16px; margin-bottom: 40px;">
+        <a href="#attendee" class="btn-outline font-mono" style="justify-content: flex-start; padding: 12px 20px; border-radius: var(--radius-md);"><span class="material-symbols-outlined">confirmation_number</span> Attendee Ticket</a>
+        <a href="#organizer" class="btn-outline font-mono" style="justify-content: flex-start; padding: 12px 20px; border-radius: var(--radius-md);"><span class="material-symbols-outlined">insights</span> Command Center</a>
+        <button id="logout-btn" class="btn-outline font-mono" style="justify-content: flex-start; padding: 12px 20px; border-radius: var(--radius-md); color: var(--color-error); border-color: rgba(255, 180, 171, 0.2);"><span class="material-symbols-outlined">logout</span> Terminate Session</button>
+      </div>
+      
+      <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 24px; text-align: center;">
+        <p class="font-mono" style="font-size: 9px; color: rgba(255, 255, 255, 0.3);">EVENTSPHERE SYSTEM v2.0.4-AI</p>
+      </div>
+    </div>
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+
+    <!-- Main View Holder -->
+    <main class="main-content">
+      
+      <!-- 1. LANDING VIEW -->
+      <section id="landing" class="page-view active">
+        <div class="hero-section">
+          <!-- Canvas for GPU Accelerated Particles -->
+          <canvas class="hero-bg-canvas" id="hero-particles"></canvas>
+          
+          <div class="hero-content">
+            <p class="hero-subtitle fade-in">IMAGINE THE FUTURE OF EVENTS</p>
+            <h1 class="hero-title reveal-text">
+              <span>Experience the</span> <br>
+              <span class="text-gradient">Future</span> <span>of keynotes</span>
+            </h1>
+            <p class="hero-description fade-in" style="animation-delay: 0.3s;">
+              Navigate the digital frontier with immersive 3D-inspired holographic keynote experiences, high-performance event management, and AI matchmaking.
+            </p>
+            <div class="fade-in" style="animation-delay: 0.6s;">
+              <a href="#explore" class="btn-primary">
+                Get Started
+                <span class="material-symbols-outlined">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured Spotlights -->
+        <div class="events-section" style="padding-top: 0;">
+          <div class="section-header">
+            <div>
+              <p class="section-label">FEATURED SPOTLIGHT</p>
+              <h2 class="section-title">Global Tech Hub</h2>
+            </div>
+          </div>
+          
+          <div class="glass-card featured-card">
+            <div class="featured-img-wrapper">
+              <img src="assets/hackathon_spotlight.png" alt="Hacking Arena Arena Spotlight">
+              <div class="featured-tag">JUNE 14-16, 2026</div>
+            </div>
+            <div class="featured-details">
+              <div class="featured-category">
+                <span class="material-symbols-outlined" style="font-size: 16px;">terminal</span>
+                <span>HACKATHON</span>
+              </div>
+              <h3 class="featured-title text-gradient">Global AI Hackathon 2026</h3>
+              <p class="featured-desc">
+                Join 5,000 top developers worldwide to build the next generation of autonomous AI systems, neural interfaces, and quantum computing frameworks.
+              </p>
+              
+              <div class="featured-footer">
+                <div class="attendees-avatars">
+                  <img src="assets/alex_sterling_avatar.png" alt="Attending User" class="att-avatar">
+                  <div class="att-avatar" style="background:#4285f4; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:10px; color:#fff;">JD</div>
+                  <div class="att-avatar" style="background:#a73df5; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:10px; color:#fff;">EL</div>
+                  <div class="att-more">+4.2k</div>
+                </div>
+                <a href="#event-details?id=global-ai-hackathon" class="btn-primary" style="padding: 10px 20px; font-size: 13px;">Register</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Animated Counter Stats Section -->
+        <div class="stats-section">
+          <div class="stats-grid">
+            <div class="glass-panel stat-item relative overflow-hidden" style="border-radius: var(--radius-xl);">
+              <div style="position:absolute; top:0; left:0; width:100%; height:2px; background: linear-gradient(90deg, transparent, var(--color-primary), transparent);"></div>
+              <div class="stat-number text-gradient" id="counter-attendees">0</div>
+              <p class="font-mono" style="color: var(--color-text-secondary);">ATTENDEES REGISTERED</p>
+            </div>
+            <div class="glass-panel stat-item relative overflow-hidden" style="border-radius: var(--radius-xl);">
+              <div style="position:absolute; top:0; left:0; width:100%; height:2px; background: linear-gradient(90deg, transparent, var(--color-secondary), transparent);"></div>
+              <div class="stat-number text-gradient" id="counter-events">0</div>
+              <p class="font-mono" style="color: var(--color-text-secondary);">GLOBAL EVENTS HOSTED</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. LOGIN / ROLE VIEW -->
+      <section id="login" class="page-view">
+        <div style="min-height: 85vh; display: flex; align-items: center; justify-content: center; padding: 120px var(--space-gutter) 80px;">
+          <div class="glass-panel" style="width: 100%; max-width: 480px; padding: 40px; border-radius: var(--radius-xl);">
+            <div class="text-center" style="margin-bottom: 32px;">
+              <span class="material-symbols-outlined text-gradient" style="font-size: 48px;">fingerprint</span>
+              <h2 style="font-size: 28px; margin-top: 8px;">Access Terminal</h2>
+              <p style="color: var(--color-text-secondary); font-size:14px; margin-top:4px;">Initiate biometric scan or enter passphrase</p>
+            </div>
+            
+            <!-- Biometric scan box animation -->
+            <div style="position:relative; width: 140px; height: 140px; margin: 0 auto 32px; border: 1px solid rgba(0, 240, 255, 0.2); border-radius: var(--radius-lg); overflow:hidden; background: rgba(5,20,36,0.5); display: flex; align-items: center; justify-content: center; cursor:pointer;" id="biometric-box">
+              <span class="material-symbols-outlined" style="font-size: 64px; color: var(--color-primary); opacity: 0.6;" id="biometric-icon">face</span>
+              <div class="scanner-line"></div>
+              <div style="position:absolute; bottom: 8px; font-size: 9px; color: var(--color-primary);" class="font-mono" id="biometric-text">CLICK_TO_SCAN</div>
+            </div>
+
+            <!-- Alternate credentials input -->
+            <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px;">
+              <div>
+                <label class="font-mono" style="display:block; font-size:10px; color: var(--color-text-secondary); margin-bottom: 8px;">USER_IDENTITY</label>
+                <input type="text" class="glass-input" id="login-username" placeholder="alex.sterling@eventsphere.ai" value="Alex Sterling">
+              </div>
+              <div>
+                <label class="font-mono" style="display:block; font-size:10px; color: var(--color-text-secondary); margin-bottom: 8px;">PASSPHRASE</label>
+                <input type="password" class="glass-input" id="login-pass" placeholder="••••••••••••••" value="hologramsystem">
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 16px;">
+              <button class="btn-primary font-mono" id="btn-login-attendee" style="flex:1; font-size: 12px; padding: 12px 10px;">ATTENDEE</button>
+              <button class="btn-primary font-mono" id="btn-login-organizer" style="flex:1; font-size: 12px; padding: 12px 10px; background: linear-gradient(135deg, var(--color-primary-dim) 0%, var(--color-secondary-container) 100%);">ORGANIZER</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. EXPLORE EVENTS VIEW -->
+      <section id="explore" class="page-view">
+        <div class="explore-layout">
+          <!-- Interactive Filter Sidebar -->
+          <aside class="glass-panel filter-sidebar">
+            <h3 class="font-mono" style="font-size: 13px; margin-bottom: 24px; color: var(--color-primary);">SEARCH_FILTERS</h3>
+            
+            <div class="filter-group">
+              <label class="filter-title">Search keyword</label>
+              <input type="text" class="glass-input" placeholder="Type event name..." id="search-input" style="padding: 10px 12px; font-size: 14px;">
+            </div>
+
+            <div class="filter-group">
+              <p class="filter-title">Category</p>
+              <label class="filter-option">
+                <input type="checkbox" class="filter-checkbox filter-cat" value="hackathon" checked>
+                <span>Hackathons</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" class="filter-checkbox filter-cat" value="keynote" checked>
+                <span>Keynotes</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" class="filter-checkbox filter-cat" value="summit" checked>
+                <span>Summits</span>
+              </label>
+            </div>
+
+            <div class="filter-group">
+              <p class="filter-title">Location</p>
+              <label class="filter-option">
+                <input type="checkbox" class="filter-checkbox filter-loc" value="tokyo" checked>
+                <span>Neo-Tokyo</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" class="filter-checkbox filter-loc" value="paris" checked>
+                <span>Paris Cluster</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" class="filter-checkbox filter-loc" value="virtual" checked>
+                <span>Virtual Stage</span>
+              </label>
+            </div>
+          </aside>
+
+          <!-- Dynamic Events Grid -->
+          <div style="display:flex; flex-direction:column; gap: var(--space-gutter);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h2 style="font-size: 32px;">Active Operations</h2>
+              <span class="font-mono" style="font-size:11px; color:var(--color-primary);" id="explore-results-count">Showing 3 Events</span>
+            </div>
+            
+            <div class="event-cards-grid" id="explore-cards-container">
+              <!-- Cards populated dynamically by script -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. EVENT DETAILS VIEW -->
+      <section id="event-details" class="page-view">
+        <div class="event-details-layout">
+          <a href="#explore" class="back-btn">
+            <span class="material-symbols-outlined" style="font-size:18px;">arrow_back</span>
+            <span>BACK_TO_CATALOG</span>
+          </a>
+          
+          <div class="details-hero">
+            <img src="assets/hackathon_spotlight.png" alt="Event Hero Image" id="details-img">
+          </div>
+
+          <div class="details-grid">
+            <!-- Left Info Panel -->
+            <div>
+              <div style="display:flex; align-items:center; gap: 8px; color:var(--color-secondary-dim); font-family:var(--font-mono); font-size:12px; margin-bottom:12px;">
+                <span class="material-symbols-outlined" style="font-size:16px;" id="details-icon">terminal</span>
+                <span id="details-cat-label">HACKATHON</span>
+              </div>
+              <h1 style="font-size: clamp(28px, 4vw, 44px); line-height:1.2; margin-bottom:24px;" id="details-title">Global AI Hackathon 2026</h1>
+              <p style="color:var(--color-text-secondary); font-size:17px; margin-bottom:40px;" id="details-long-desc">
+                Join 5,000 top developers worldwide to build the next generation of autonomous AI systems, neural interfaces, and quantum computing frameworks. Meet venture leaders, work alongside AI researchers, and win over $250k in cash and seed fundings.
+              </p>
+
+              <!-- Agenda Timeline -->
+              <div class="agenda-timeline">
+                <h3 class="font-mono" style="font-size: 13px; margin-bottom: 24px; color: var(--color-primary);">EVENT_TIMELINE</h3>
+                
+                <div class="timeline-item">
+                  <div class="timeline-time">DAY_01 09:00</div>
+                  <div>
+                    <h4 class="timeline-title">Keynote Opening: Neural Pathways</h4>
+                    <p class="timeline-desc">Fireside orientation with leading AI scientists mapping current paradigms.</p>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-time">DAY_02 12:00</div>
+                  <div>
+                    <h4 class="timeline-title">Checkpoint: Agentic Architecture</h4>
+                    <p class="timeline-desc">Intermediate review panel where projects undergo initial security and optimization test streams.</p>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-time">DAY_03 16:00</div>
+                  <div>
+                    <h4 class="timeline-title">Cinematic Final Pitches & Awards</h4>
+                    <p class="timeline-desc">Top 10 team prototypes demoed on the Neo-Tokyo arena holographic stage.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Ticketing Sidebar -->
+            <div>
+              <div class="glass-panel details-sidebar-card">
+                <h3 class="font-mono" style="font-size:12px; color:var(--color-primary); margin-bottom:24px; text-align:center;">TICKET_TIERS</h3>
+                
+                <div class="ticket-price-box">
+                  <span class="font-mono" style="font-size:10px; color:var(--color-text-secondary);">SELECTING TIER</span>
+                  <div style="font-size: 36px; font-weight:700; font-family:var(--font-display); color:#fff; margin-top:4px;" id="details-selected-price">$250</div>
+                </div>
+
+                <div class="ticket-tiers" id="tiers-container">
+                  <!-- Tiers listed here -->
+                  <div class="tier-item selected" data-tier="general" data-price="250">
+                    <div>
+                      <div class="tier-name">General Entry</div>
+                      <p style="font-size:10px; color:var(--color-text-secondary); margin-top:2px;">Standard main standing sector</p>
+                    </div>
+                    <div class="tier-price">$250</div>
+                  </div>
+                  <div class="tier-item" data-tier="vip" data-price="850">
+                    <div>
+                      <div class="tier-name">VIP Elite</div>
+                      <p style="font-size:10px; color:var(--color-text-secondary); margin-top:2px;">Stage-side glass pod & amenities</p>
+                    </div>
+                    <div class="tier-price">$850</div>
+                  </div>
+                  <div class="tier-item" style="opacity: 0.45; cursor: not-allowed;" data-sold-out="true">
+                    <div>
+                      <div class="tier-name">Early Bird</div>
+                      <p style="font-size:10px; color:var(--color-text-secondary); margin-top:2px;">Early register discounts</p>
+                    </div>
+                    <div class="tier-price">SOLD_OUT</div>
+                  </div>
+                </div>
+
+                <!-- Interactive Seat Grid Booking -->
+                <div id="seat-booking-section" style="margin-top: 24px; display: none;">
+                  <h4 class="font-mono" style="font-size: 10px; color: var(--color-primary); margin-bottom: 12px; text-align: center;">CHOOSE_YOUR_SEAT</h4>
+                  <div style="background: rgba(5,20,36,0.5); padding: 16px; border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.05); text-align:center;">
+                    <div style="width: 100%; height: 20px; background: rgba(138,43,226,0.2); border: 1px solid var(--color-secondary); border-radius: var(--radius-sm); font-size: 9px; line-height: 20px; margin-bottom: 16px;" class="font-mono text-gradient">STAGE FRONT</div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px;" id="details-seat-grid">
+                      <!-- Seat buttons dynamically rendered, e.g. A1 - D6 -->
+                    </div>
+                    
+                    <div style="margin-top: 16px; display:flex; justify-content:space-between; align-items:center;" class="font-mono">
+                      <span style="font-size: 9px; color:var(--color-text-secondary);">SELECTED_SEAT</span>
+                      <span style="font-size: 14px; font-weight:bold; color:var(--color-primary);" id="details-selected-seat">NONE</span>
+                    </div>
+                  </div>
+                </div>
+
+                <button class="btn-primary w-full font-mono" id="btn-register-checkout" style="margin-top:24px; border-radius: var(--radius-md);">INITIALIZE_CHECKOUT</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. ATTENDEE DASHBOARD VIEW -->
+      <section id="attendee" class="page-view">
+        <div class="attendee-layout">
+          <!-- Profile Card Left -->
+          <aside class="glass-panel profile-card">
+            <div class="profile-img-big">
+              <img src="assets/alex_sterling_avatar.png" alt="Holographic User Avatar" id="attendee-avatar-img">
+            </div>
+            
+            <div style="margin-bottom: 32px;">
+              <h2 style="font-size: 24px; margin-bottom: 4px;" id="attendee-user-name">Alex Sterling</h2>
+              <p class="font-mono" style="font-size: 11px; color: var(--color-primary);">TICKET_HOLDER</p>
+            </div>
+
+            <!-- Profile Settings Mini Form -->
+            <div style="text-align: left; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 24px;">
+              <h4 class="font-mono" style="font-size: 10px; color:var(--color-secondary-dim); margin-bottom:16px;">CUSTOMIZE_IDENTITY</h4>
+              <div style="display:flex; flex-direction:column; gap:12px;">
+                <div>
+                  <label class="font-mono" style="font-size:9px; color:var(--color-text-secondary); display:block; margin-bottom:4px;">DISP_NAME</label>
+                  <input type="text" class="glass-input" id="profile-name-input" value="Alex Sterling" style="padding: 8px 12px; font-size:13px;">
+                </div>
+                <button class="btn-primary font-mono" id="btn-save-profile" style="padding:8px 16px; font-size:11px; border-radius:var(--radius-md);">SYS_UPDATE</button>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Core Tickets Right -->
+          <div>
+            <h2 style="font-size:32px; margin-bottom:32px;">Digital Event Pass</h2>
+            
+            <div id="tickets-container-list">
+              <!-- Tickets displayed here -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. ORGANIZER COMMAND CENTER VIEW -->
+      <section id="organizer" class="page-view">
+        <div style="padding: 120px var(--margin-desktop) 80px; max-width: var(--container-max); margin: 0 auto;">
+          <!-- Command center banner -->
+          <div style="margin-bottom: 40px; display:flex; justify-content:space-between; align-items:flex-end;">
+            <div>
+              <h2 style="font-size: clamp(28px, 4vw, 44px); line-height:1.2;">Organizer Command Center</h2>
+              <p style="color:var(--color-text-secondary); display:flex; align-items:center; gap:8px; margin-top:8px;">
+                <span class="inline-block w-2.5 h-2.5 rounded-full bg-success pulse-zone" style="background:#00f07f;"></span>
+                <span>System Live: Monitoring Neo-Tokyo Arena • <b style="color:#fff;" id="live-users-counter">850</b> inside sector grids</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="organizer-grid">
+            <!-- Key Metrics Rows -->
+            <div class="span-4 glass-panel" style="padding:24px; border-radius: var(--radius-xl); position:relative; overflow:hidden;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
+                <span class="material-symbols-outlined text-gradient" style="font-size:32px;">payments</span>
+                <span class="font-mono" style="font-size:10px; color:#00f07f;">+12.4% VS LY</span>
+              </div>
+              <p class="font-mono" style="font-size:10px; color:var(--color-text-secondary); text-transform:uppercase;">Total Revenue</p>
+              <h3 style="font-size: 36px; font-weight:700; margin-top:4px;" id="metric-revenue">$124,000</h3>
+            </div>
+
+            <div class="span-4 glass-panel" style="padding:24px; border-radius: var(--radius-xl); position:relative; overflow:hidden;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
+                <span class="material-symbols-outlined text-gradient" style="font-size:32px;">confirmation_number</span>
+                <span class="font-mono" style="font-size:10px; color:var(--color-primary);">84.2% CAP</span>
+              </div>
+              <p class="font-mono" style="font-size:10px; color:var(--color-text-secondary); text-transform:uppercase;">Tickets Sold</p>
+              <h3 style="font-size: 36px; font-weight:700; margin-top:4px;" id="metric-tickets">4,281</h3>
+            </div>
+
+            <div class="span-4 glass-panel" style="padding:24px; border-radius: var(--radius-xl); position:relative; overflow:hidden; border-color: rgba(0, 240, 255, 0.3);">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
+                <span class="material-symbols-outlined" style="font-size:32px; color: var(--color-primary); animation: pulse-ring 2s infinite;">sensors</span>
+                <span class="font-mono" style="font-size:10px; color: var(--color-error); background:rgba(255,180,171,0.1); padding: 2px 6px; border-radius: var(--radius-sm);">ONLINE</span>
+              </div>
+              <p class="font-mono" style="font-size:10px; color:var(--color-text-secondary); text-transform:uppercase;">Live Inside Venue</p>
+              <h3 style="font-size: 36px; font-weight:700; margin-top:4px;" id="metric-live">850</h3>
+            </div>
+
+            <!-- Bento Card 1: Revenue Analytics Chart -->
+            <div class="span-8 glass-panel" style="padding:32px; border-radius: var(--radius-xl); height: 400px; display:flex; flex-direction:column;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                <div>
+                  <h3 style="font-size: 20px;">Revenue Analytics</h3>
+                  <p style="font-size: 13px; color:var(--color-text-secondary);">Last 7 Days Growth Stream</p>
+                </div>
+                <div style="display:flex; gap: 8px;">
+                  <button class="btn-outline font-mono" style="padding: 4px 10px; font-size:10px; border-radius:var(--radius-full);">D</button>
+                  <button class="btn-outline font-mono" style="padding: 4px 10px; font-size:10px; border-radius:var(--radius-full); background: var(--color-primary); color:var(--color-text-dark); border-color:var(--color-primary);">W</button>
+                  <button class="btn-outline font-mono" style="padding: 4px 10px; font-size:10px; border-radius:var(--radius-full);">M</button>
+                </div>
+              </div>
+              
+              <!-- SVG Graph Workspace -->
+              <div style="flex-grow:1; width:100%; position:relative; overflow:hidden;" class="chart-container">
+                <svg width="100%" height="100%" viewBox="0 0 700 200" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="svgGradient" x1="0" x2="0" y1="0" y2="1">
+                      <stop offset="0%" stop-color="rgba(0, 240, 255, 0.25)"></stop>
+                      <stop offset="100%" stop-color="rgba(0, 240, 255, 0)"></stop>
+                    </linearGradient>
+                  </defs>
+                  
+                  <!-- Area Fill -->
+                  <path d="M0,180 Q90,165 180,170 T360,110 T540,65 T700,10 V200 H0 Z" fill="url(#svgGradient)"></path>
+                  
+                  <!-- Animated Chart Line -->
+                  <path class="chart-line" d="M0,180 Q90,165 180,170 T360,110 T540,65 T700,10" fill="none" stroke="var(--color-primary)" stroke-width="3"></path>
+                  
+                  <!-- Node nodes -->
+                  <circle cx="180" cy="170" r="4" fill="var(--color-primary)" style="filter: drop-shadow(0 0 5px var(--color-primary));"></circle>
+                  <circle cx="360" cy="110" r="4" fill="var(--color-primary)" style="filter: drop-shadow(0 0 5px var(--color-primary));"></circle>
+                  <circle cx="540" cy="65" r="4" fill="var(--color-primary)" style="filter: drop-shadow(0 0 5px var(--color-primary));"></circle>
+                  <circle cx="700" cy="10" r="6" fill="var(--color-primary)" style="filter: drop-shadow(0 0 8px var(--color-primary));" class="pulse-zone"></circle>
+                </svg>
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-top: 16px; color:var(--color-text-secondary); font-size:10px;" class="font-mono">
+                <span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
+              </div>
+            </div>
+
+            <!-- Bento Card 2: Tier Performance Rings -->
+            <div class="span-4 glass-panel" style="padding:32px; border-radius: var(--radius-xl); height: 400px; display:flex; flex-direction:column; justify-content:space-between;">
+              <h3 style="font-size: 20px; margin-bottom:16px;">Tier Performance</h3>
+              
+              <div style="display:flex; flex-direction:column; gap:20px; flex-grow:1; justify-content:center;">
+                <!-- VIP Ring -->
+                <div style="display:flex; align-items:center; gap:20px;">
+                  <div style="position:relative; width:56px; height:56px;">
+                    <svg width="56" height="56">
+                      <circle cx="28" cy="28" r="24" fill="none" stroke="rgba(138, 43, 226, 0.1)" stroke-width="5"></circle>
+                      <circle cx="28" cy="28" r="24" fill="none" stroke="var(--color-secondary-dim)" stroke-width="5" stroke-dasharray="150" stroke-dashoffset="15" stroke-linecap="round" class="progress-ring-circle"></circle>
+                    </svg>
+                    <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:bold; color:#fff;" class="font-mono">90%</span>
+                  </div>
+                  <div>
+                    <h4 style="font-size: 16px;">VIP Elite</h4>
+                    <p class="font-mono" style="font-size:11px; color:var(--color-text-secondary);">450 / 500 sold</p>
+                  </div>
+                </div>
+                
+                <!-- General Ring -->
+                <div style="display:flex; align-items:center; gap:20px;">
+                  <div style="position:relative; width:56px; height:56px;">
+                    <svg width="56" height="56">
+                      <circle cx="28" cy="28" r="24" fill="none" stroke="rgba(0, 240, 255, 0.1)" stroke-width="5"></circle>
+                      <circle cx="28" cy="28" r="24" fill="none" stroke="var(--color-primary)" stroke-width="5" stroke-dasharray="150" stroke-dashoffset="52" stroke-linecap="round" class="progress-ring-circle"></circle>
+                    </svg>
+                    <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:bold; color:#fff;" class="font-mono">65%</span>
+                  </div>
+                  <div>
+                    <h4 style="font-size: 16px;">General Entry</h4>
+                    <p class="font-mono" style="font-size:11px; color:var(--color-text-secondary);">2,600 / 4,000 sold</p>
+                  </div>
+                </div>
+                
+                <!-- Early Bird Ring -->
+                <div style="display:flex; align-items:center; gap:20px;">
+                  <div style="position:relative; width:56px; height:56px;">
+                    <svg width="56" height="56">
+                      <circle cx="28" cy="28" r="24" fill="none" stroke="rgba(255, 255, 255, 0.05)" stroke-width="5"></circle>
+                      <circle cx="28" cy="28" r="24" fill="none" stroke="#fff" stroke-width="5" stroke-dasharray="150" stroke-dashoffset="0" stroke-linecap="round" class="progress-ring-circle"></circle>
+                    </svg>
+                    <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:bold; color:#fff;" class="font-mono">100%</span>
+                  </div>
+                  <div>
+                    <h4 style="font-size: 16px;">Early Bird</h4>
+                    <p class="font-mono" style="font-size:11px; color:var(--color-text-secondary);">1,200 / 1,200 sold</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bento Card 3: Arena Live Heatmap -->
+            <div class="span-7 glass-panel" style="padding:32px; border-radius: var(--radius-xl); height:450px; display:flex; flex-direction:column;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                <div>
+                  <h3 style="font-size: 20px;">Arena Live Heatmap</h3>
+                  <p style="font-size:13px; color:var(--color-text-secondary);">Real-time sector density telemetry</p>
+                </div>
+                <div class="glass-card" style="padding: 8px 16px; border-radius:var(--radius-md); display:flex; align-items:center; gap:8px;">
+                  <span class="font-mono" style="font-size:9px; color:var(--color-text-secondary);">VENUE_TEMP</span>
+                  <span style="color:var(--color-primary); font-weight:bold;" class="font-mono">22.4°C</span>
+                </div>
+              </div>
+              
+              <div class="venue-map-container" style="flex-grow:1;">
+                <div class="arena-hull">
+                  <div class="arena-stage">MAIN STAGE</div>
+                  
+                  <!-- Pulser regions -->
+                  <div class="heatmap-sector sector-vip" data-sector="VIP Elite" data-capacity="90%" data-count="450"></div>
+                  <div class="heatmap-sector sector-left" data-sector="Left Wing General" data-capacity="72%" data-count="1440"></div>
+                  <div class="heatmap-sector sector-right" data-sector="Right Wing General" data-capacity="58%" data-count="1160"></div>
+                  
+                  <!-- Pulse coordinates standing -->
+                  <div style="position:absolute; bottom:30px; width:70%; height:40px; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; align-items:center; opacity:0.35;">
+                    <div style="width:3px; height:3px; border-radius:50%; background:var(--color-primary); animation: pulse-ring 1s infinite;"></div>
+                    <div style="width:3px; height:3px; border-radius:50%; background:var(--color-primary);"></div>
+                    <div style="width:3px; height:3px; border-radius:50%; background:var(--color-secondary); animation: pulse-ring 1.5s infinite; animation-delay:0.3s;"></div>
+                    <div style="width:3px; height:3px; border-radius:50%; background:var(--color-primary);"></div>
+                    <div style="width:3px; height:3px; border-radius:50%; background:var(--color-primary); animation: pulse-ring 1.2s infinite; animation-delay:0.6s;"></div>
+                  </div>
+                </div>
+                
+                <!-- Small status tag in map -->
+                <div style="position:absolute; bottom:16px; right:16px; display:flex; flex-direction:column; gap:4px; font-size:10px;" class="font-mono">
+                  <div style="display:flex; align-items:center; gap:6px;"><span style="width:6px; height:6px; border-radius:50%; background:#ff5050;"></span> High Occupancy</div>
+                  <div style="display:flex; align-items:center; gap:6px;"><span style="width:6px; height:6px; border-radius:50%; background:#ffca50;"></span> Moderate</div>
+                  <div style="display:flex; align-items:center; gap:6px;"><span style="width:6px; height:6px; border-radius:50%; background:#00f0ff;"></span> Clear</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bento Card 4: Operations Log Feed -->
+            <div class="span-5 glass-panel" style="padding:32px; border-radius: var(--radius-xl); height:450px; display:flex; flex-direction:column;">
+              <h3 style="font-size: 20px; margin-bottom:24px;">Live Operations Log</h3>
+              
+              <div class="live-log-box" id="operations-log-container">
+                <!-- Log streams appended here dynamically -->
+                <div class="log-item log-primary">
+                  <div style="width:36px; height:36px; border-radius:var(--radius-sm); background:rgba(0,240,255,0.1); display:flex; align-items:center; justify-content:center; shrink:0;">
+                    <span class="material-symbols-outlined" style="font-size:18px; color:var(--color-primary);">qr_code_scanner</span>
+                  </div>
+                  <div>
+                    <p style="font-size:13px; color:#fff;"><span style="font-weight:bold; color:var(--color-primary);">VIP Checked-in:</span> Marcus Holloway</p>
+                    <p class="font-mono" style="font-size:9px; color:var(--color-text-secondary); margin-top:2px;">SYMMETRY_GATE • 1M AGO</p>
+                  </div>
+                </div>
+                
+                <div class="log-item log-secondary">
+                  <div style="width:36px; height:36px; border-radius:var(--radius-sm); background:rgba(138,43,226,0.1); display:flex; align-items:center; justify-content:center; shrink:0;">
+                    <span class="material-symbols-outlined" style="font-size:18px; color:var(--color-secondary-dim);">shopping_cart</span>
+                  </div>
+                  <div>
+                    <p style="font-size:13px; color:#fff;"><span style="font-weight:bold; color:var(--color-secondary-dim);">New Booking:</span> 2x General Entry</p>
+                    <p class="font-mono" style="font-size:9px; color:var(--color-text-secondary); margin-top:2px;">SYS_PORTAL • 3M AGO</p>
+                  </div>
+                </div>
+
+                <div class="log-item log-error">
+                  <div style="width:36px; height:36px; border-radius:var(--radius-sm); background:rgba(255,180,171,0.1); display:flex; align-items:center; justify-content:center; shrink:0;">
+                    <span class="material-symbols-outlined" style="font-size:18px; color:var(--color-error);">wifi_off</span>
+                  </div>
+                  <div>
+                    <p style="font-size:13px; color:#fff;"><span style="font-weight:bold; color:var(--color-error);">Alert:</span> Gate 4 Connectivity Lag</p>
+                    <p class="font-mono" style="font-size:9px; color:var(--color-text-secondary); margin-top:2px;">TELEM_DAEMON • 10M AGO</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. AI NETWORKING VIEW -->
+      <section id="networking" class="page-view">
+        <div style="padding: 120px var(--margin-desktop) 80px; max-width: 800px; margin:0 auto; text-align:center;">
+          <div style="margin-bottom: 48px;">
+            <p class="section-label">HOLOGRAPHIC WORKSPACE</p>
+            <h2 style="font-size:clamp(28px, 4vw, 40px);">AI Matchmaking & Swaps</h2>
+            <p style="color:var(--color-text-secondary); max-width: 500px; margin: 8px auto 0;">
+              Connect with fellow tech executives, build relationships, and instantly swap secure digital holographic identity cards.
+            </p>
+          </div>
+
+          <!-- Cards workspace stack -->
+          <div class="networking-workspace">
+            <div class="holo-card-stack" id="networking-card-stack">
+              
+              <!-- Card 1 -->
+              <div class="glass-panel holo-card top" style="border-radius: var(--radius-xl);">
+                <div class="scanner-line"></div>
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                  <span class="font-mono" style="font-size:9px; color:var(--color-primary);">AI_MATCH_94%</span>
+                  <span class="material-symbols-outlined" style="color:var(--color-primary); font-size:24px;">blur_on</span>
+                </div>
+                <div style="text-align:left;">
+                  <div style="display:flex; gap:16px; align-items:center; margin-bottom:16px;">
+                    <div style="width:48px; height:48px; border-radius:50%; border: 1px solid var(--color-primary); overflow:hidden;">
+                      <img src="assets/alex_sterling_avatar.png" alt="Card Avatar" style="width:100%; height:100%; object-fit:cover; filter: hue-rotate(90deg);">
+                    </div>
+                    <div>
+                      <h4 style="font-size:18px;">Elena Rostova</h4>
+                      <p class="font-mono" style="font-size:10px; color:var(--color-text-secondary);">Chief AI Architect @ Quantum Labs</p>
+                    </div>
+                  </div>
+                  <p style="font-size:13px; color:var(--color-text-secondary);">"Focusing on hardware-accelerated agentic frameworks and neural-integrated compiler models inside corporate clusters."</p>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.08); padding-top:16px;" class="font-mono">
+                  <span>NEO-TOKYO 2026</span>
+                  <span style="color:var(--color-primary);">SWIPE_RIGHT_TO_SWAP</span>
+                </div>
+              </div>
+
+              <!-- Card 2 -->
+              <div class="glass-panel holo-card middle" style="border-radius: var(--radius-xl);">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                  <span class="font-mono" style="font-size:9px; color:var(--color-primary);">AI_MATCH_88%</span>
+                  <span class="material-symbols-outlined" style="color:var(--color-secondary-dim); font-size:24px;">blur_on</span>
+                </div>
+                <div style="text-align:left;">
+                  <div style="display:flex; gap:16px; align-items:center; margin-bottom:16px;">
+                    <div style="width:48px; height:48px; border-radius:50%; border: 1px solid var(--color-secondary-dim); overflow:hidden;">
+                      <div style="width:100%; height:100%; background: #eb3b88; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:16px; color:#fff;">MC</div>
+                    </div>
+                    <div>
+                      <h4 style="font-size:18px;">Marcus Chen</h4>
+                      <p class="font-mono" style="font-size:10px; color:var(--color-text-secondary);">VP Ecosystems @ NeoVenture</p>
+                    </div>
+                  </div>
+                  <p style="font-size:13px; color:var(--color-text-secondary);">"Looking to invest in early-stage developers building decentralized infrastructure and computing meshes in APAC."</p>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.08); padding-top:16px;" class="font-mono">
+                  <span>SHANGHAI STAGE</span>
+                  <span style="color:var(--color-secondary-dim);">SWIPE_RIGHT_TO_SWAP</span>
+                </div>
+              </div>
+
+              <!-- Card 3 -->
+              <div class="glass-panel holo-card bottom" style="border-radius: var(--radius-xl);">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                  <span class="font-mono" style="font-size:9px; color:var(--color-primary);">AI_MATCH_81%</span>
+                  <span class="material-symbols-outlined" style="color:var(--color-text-secondary); font-size:24px;">blur_on</span>
+                </div>
+                <div style="text-align:left;">
+                  <div style="display:flex; gap:16px; align-items:center; margin-bottom:16px;">
+                    <div style="width:48px; height:48px; border-radius:50%; border: 1px solid var(--color-text-secondary); overflow:hidden;">
+                      <div style="width:100%; height:100%; background: #3bca7a; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:16px; color:#fff;">SP</div>
+                    </div>
+                    <div>
+                      <h4 style="font-size:18px;">Sarah Patel</h4>
+                      <p class="font-mono" style="font-size:10px; color:var(--color-text-secondary);">Principal Dev @ CoreNodes</p>
+                    </div>
+                  </div>
+                  <p style="font-size:13px; color:var(--color-text-secondary);">"Building real-time WebXR layers overlaying high-performance physical arenas for event check-in simulations."</p>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.08); padding-top:16px;" class="font-mono">
+                  <span>PARIS HUB</span>
+                  <span>SWIPE_RIGHT_TO_SWAP</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Interactivity action buttons -->
+            <div style="display:flex; gap:24px; margin-top:48px; position:relative; z-index:10;">
+              <button class="btn-outline font-mono" id="btn-swipe-left" style="width:56px; height:56px; border-radius:50%; padding:0; border-color: rgba(255,180,171,0.25); color:var(--color-error);"><span class="material-symbols-outlined">close</span></button>
+              <button class="btn-primary font-mono" id="btn-swipe-right" style="width:56px; height:56px; border-radius:50%; padding:0; background:linear-gradient(135deg, var(--color-primary-dim) 0%, var(--color-success) 100%);"><span class="material-symbols-outlined">favorite</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Global Floating Action Navigation Bar (Mobile / Responsive Anchor) -->
+    <nav class="glass-panel hide-logged-out" style="position:fixed; bottom:24px; left:50%; transform:translateX(-50%); z-index:90; display:none; justify-content:space-around; align-items:center; padding:10px; width:90%; max-width:440px; border-radius:var(--radius-full);">
+      <a href="#landing" class="font-mono flex flex-col items-center justify-center nav-anchor active" style="color:var(--color-text-secondary); text-decoration:none; font-size:8px;" data-anchor="landing">
+        <span class="material-symbols-outlined" style="font-size:22px; margin-bottom:2px;">home</span>
+        <span>HOME</span>
+      </a>
+      <a href="#explore" class="font-mono flex flex-col items-center justify-center nav-anchor" style="color:var(--color-text-secondary); text-decoration:none; font-size:8px;" data-anchor="explore">
+        <span class="material-symbols-outlined" style="font-size:22px; margin-bottom:2px;">explore</span>
+        <span>EXPLORE</span>
+      </a>
+      <a href="#networking" class="font-mono flex flex-col items-center justify-center nav-anchor" style="color:var(--color-text-secondary); text-decoration:none; font-size:8px;" data-anchor="networking">
+        <span class="material-symbols-outlined" style="font-size:22px; margin-bottom:2px;">diversity_3</span>
+        <span>AI_SWAP</span>
+      </a>
+      <a href="#login" class="font-mono flex flex-col items-center justify-center nav-anchor" id="nav-anchor-secure" style="color:var(--color-text-secondary); text-decoration:none; font-size:8px;" data-anchor="login">
+        <span class="material-symbols-outlined" style="font-size:22px; margin-bottom:2px;">lock</span>
+        <span>SECURE_SYS</span>
+      </a>
+    </nav>
+
+    <!-- Modal Dialog Ticketing Form -->
+    <div class="checkout-modal" id="checkout-modal">
+      <div class="modal-backdrop" id="checkout-backdrop"></div>
+      <div class="glass-panel modal-content">
+        <button class="modal-close" id="checkout-close">×</button>
+        <h3 class="font-mono text-gradient" style="font-size:18px; margin-bottom:24px;">INITIALIZE_PAYMENT</h3>
+        
+        <!-- Glowing visual card preview -->
+        <div class="credit-card-glow">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <span class="font-mono" style="font-size:10px; color:#fff;" id="cc-card-holder">ALEX STERLING</span>
+            <span class="material-symbols-outlined" style="color:#fff; font-size:28px;">blur_on</span>
+          </div>
+          <div style="text-align:left;">
+            <p class="font-mono" style="font-size:16px; color:#fff; letter-spacing:0.1em; margin-bottom:8px;" id="cc-card-number">•••• •••• •••• 4281</p>
+            <div style="display:flex; justify-content:space-between; font-size:9px;" class="font-mono">
+              <span id="cc-card-expiry">EXP 12/29</span>
+              <span>SECURE PROTOCOL</span>
+            </div>
+          </div>
+        </div>
+
+        <form id="checkout-form" onsubmit="return false;" style="display:flex; flex-direction:column; gap:16px;">
+          <div>
+            <label class="font-mono" style="display:block; font-size:9px; color:var(--color-text-secondary); margin-bottom:6px;">TICKET_HOLDER_NAME</label>
+            <input type="text" class="glass-input" id="checkout-name" value="Alex Sterling" required>
+          </div>
+          <div>
+            <label class="font-mono" style="display:block; font-size:9px; color:var(--color-text-secondary); margin-bottom:6px;">CARD_CREDENTIALS</label>
+            <input type="text" class="glass-input" id="checkout-cardnum" placeholder="4000 1234 5678 9010" maxlength="19" required>
+          </div>
+          <div style="display:flex; gap:16px;">
+            <div style="flex:1;">
+              <label class="font-mono" style="display:block; font-size:9px; color:var(--color-text-secondary); margin-bottom:6px;">VALID_THRU</label>
+              <input type="text" class="glass-input" id="checkout-expiry" placeholder="12/29" maxlength="5" required>
+            </div>
+            <div style="flex:1;">
+              <label class="font-mono" style="display:block; font-size:9px; color:var(--color-text-secondary); margin-bottom:6px;">CVV_CODE</label>
+              <input type="password" class="glass-input" id="checkout-cvv" placeholder="•••" maxlength="3" required>
+            </div>
+          </div>
+          
+          <button type="submit" class="btn-primary font-mono" id="btn-submit-payment" style="margin-top:16px; padding:14px; border-radius: var(--radius-md);">CONFIRM_TRANSACTION</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Alert toast for UI interaction feedbacks -->
+    <div id="toast-alert" class="glass-panel" style="position:fixed; top:24px; left:50%; transform:translateX(-50%) translateY(-100px); z-index:999; padding: 12px 24px; border-radius:var(--radius-md); border-color:var(--color-primary); box-shadow: 0 0 25px rgba(0,240,255,0.2); display:flex; align-items:center; gap:12px; pointer-events:none; opacity:0; transition:var(--transition-bounce);">
+      <span class="material-symbols-outlined" style="color:var(--color-primary);" id="toast-icon">info</span>
+      <span class="font-mono" style="font-size:12px;" id="toast-message">SYSTEM_ALERT</span>
+    </div>
+
+  </div>
+
+  <!-- Core Interactive JS Engine -->
+  <script src="index.js"></script>
+</body>
+</html>
